@@ -17,12 +17,36 @@ const enquirySchema = z.object({
   preferredContact: z.enum(['phone', 'whatsapp']),
 });
 
+const DEFAULT_ALLOWED_ORIGINS = [
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'https://sushanthplumbingservices.in',
+  'https://www.sushanthplumbingservices.in',
+  'https://sushanth-plumbing-services.vercel.app',
+];
+
+function isAllowedOrigin(origin) {
+  if (!origin) return false;
+  const configured = (process.env.ALLOWED_ORIGINS || '')
+    .split(',')
+    .map((item) => item.trim())
+    .filter(Boolean);
+
+  if (configured.includes('*')) return true;
+  if (configured.includes(origin) || DEFAULT_ALLOWED_ORIGINS.includes(origin)) {
+    return true;
+  }
+  return /^https:\/\/sushanth-plumbing-services(?:-[a-z0-9-]+)?\.vercel\.app$/i.test(origin);
+}
+
 export default async function handler(req, res) {
-  const allowedOrigins = (process.env.ALLOWED_ORIGINS || '*').split(',');
   const origin = req.headers.origin;
-  
-  if (allowedOrigins.includes('*') || allowedOrigins.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin || '*');
+
+  if (origin && isAllowedOrigin(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Vary', 'Origin');
+  } else if (!process.env.ALLOWED_ORIGINS) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
   }
   res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization');
