@@ -14,6 +14,14 @@ app.use(cors({
 }));
 
 // Map Vercel Serverless Functions to Express routes
+app.get('/', (req, res) => {
+  return res.status(200).json({
+    status: 'ok',
+    service: 'Sushanth Plumbing Services API',
+    endpoints: ['/api/health', '/api/enquiries'],
+  });
+});
+
 app.all('/api/enquiries', async (req, res) => {
   return enquiriesHandler(req, res);
 });
