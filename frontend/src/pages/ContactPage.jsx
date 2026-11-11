@@ -15,25 +15,45 @@ export default function ContactPage() {
     e.preventDefault();
     setIsSubmitting(true);
     setStatus('Submitting...');
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
+
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api'}/enquiries`, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+      const apiBase = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api')
+        .trim()
+        .replace(/\/+$/, '');
+      const response = await fetch(`${apiBase}/enquiries`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+        signal: controller.signal,
       });
-      const data = await response.json();
+
+      const rawText = await response.text();
+      let data = {};
+      try {
+        data = rawText ? JSON.parse(rawText) : {};
+      } catch {
+        data = {};
+      }
+
       if (response.ok) {
         setStatus('Enquiry submitted successfully! We will contact you soon.');
         setFormData({ fullName: '', phone: '', email: '', pinCode: '', locality: '', serviceSelection: 'renovation-grouting', description: '', preferredContact: 'phone' });
+      } else if (data.details && data.details.length > 0) {
+        setStatus(`Error: ${data.details[0].message}`);
       } else {
-        if (data.details && data.details.length > 0) {
-          setStatus(`Error: ${data.details[0].message}`);
-        } else {
-          setStatus(`Error: ${data.error || 'Failed to submit'}`);
-        }
+        setStatus(`Error: ${data.error || `Request failed (${response.status})`}`);
       }
-    } catch {
-      setStatus('Error connecting to the server. Please try calling us instead.');
+    } catch (err) {
+      if (err.name === 'AbortError') {
+        setStatus('Error: Request timed out. Please try again or call us directly.');
+      } else {
+        setStatus('Error connecting to the server. Please try calling us instead.');
+      }
     } finally {
+      clearTimeout(timeoutId);
       setIsSubmitting(false);
     }
   };
@@ -139,7 +159,15 @@ export default function ContactPage() {
                 {isSubmitting ? 'Sending...' : <><Send size={18} /> Submit Enquiry</>}
               </button>
               {status && (
-                <div style={{ padding: '0.75rem', borderRadius: 'var(--radius-sm)', backgroundColor: status.includes('Error') ? '#fee2e2' : '#dcfce7', color: status.includes('Error') ? '#991b1b' : '#166534', fontWeight: 500, textAlign: 'center', fontSize: '0.9rem' }}>
+                <div style={{
+                  padding: '0.75rem',
+                  borderRadius: 'var(--radius-sm)',
+                  backgroundColor: isSubmitting ? '#fef3c7' : status.includes('Error') ? '#fee2e2' : '#dcfce7',
+                  color: isSubmitting ? '#92400e' : status.includes('Error') ? '#991b1b' : '#166534',
+                  fontWeight: 500,
+                  textAlign: 'center',
+                  fontSize: '0.9rem',
+                }}>
                   {status}
                 </div>
               )}
