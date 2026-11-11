@@ -1,5 +1,37 @@
 import { useState } from 'react';
-import { Phone, MessageCircle, Mail, MapPin, Send } from 'lucide-react';
+import { Phone, MessageCircle, MapPin, Send } from 'lucide-react';
+
+const ADMIN_WHATSAPP_NUMBER = '917995486994';
+
+const SERVICE_OPTIONS = [
+  { value: 'renovation-grouting', label: 'Renovation & Grouting' },
+  { value: 'pipe-leak-repair', label: 'Pipe Leak Repair' },
+  { value: 'bathroom-plumbing', label: 'Bathroom Plumbing' },
+  { value: 'drain-cleaning', label: 'Drain Cleaning' },
+  { value: 'kitchen-plumbing', label: 'Kitchen Plumbing' },
+  { value: 'geyser-installation', label: 'Geyser Installation' },
+  { value: 'water-tank-installation', label: 'Water Tank Installation' },
+  { value: 'other', label: 'Other' },
+];
+
+function buildWhatsAppEnquiryUrl(enquiry) {
+  const serviceLabel =
+    SERVICE_OPTIONS.find((opt) => opt.value === enquiry.serviceSelection)?.label ||
+    enquiry.serviceSelection;
+
+  const lines = [
+    'New Enquiry - Sushanth Plumbing Services',
+    `Name: ${enquiry.fullName}`,
+    `Phone: ${enquiry.phone}`,
+    ...(enquiry.email ? [`Email: ${enquiry.email}`] : []),
+    `PIN Code: ${enquiry.pinCode}`,
+    `Service: ${serviceLabel}`,
+    `Preferred Contact: ${enquiry.preferredContact === 'whatsapp' ? 'WhatsApp' : 'Phone'}`,
+    `Description: ${enquiry.description}`,
+  ];
+
+  return `https://wa.me/${ADMIN_WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join('\n'))}`;
+}
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -8,13 +40,17 @@ export default function ContactPage() {
   });
   const [status, setStatus] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [whatsappUrl, setWhatsappUrl] = useState('');
 
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     setStatus('Submitting...');
+    setWhatsappUrl('');
 
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 15000);
@@ -39,8 +75,11 @@ export default function ContactPage() {
       }
 
       if (response.ok) {
-        setStatus('Enquiry submitted successfully! We will contact you soon.');
+        const waUrl = buildWhatsAppEnquiryUrl(formData);
+        setWhatsappUrl(waUrl);
+        setStatus('Enquiry saved! Opening WhatsApp so you can send the details to our team.');
         setFormData({ fullName: '', phone: '', email: '', pinCode: '', locality: '', serviceSelection: 'renovation-grouting', description: '', preferredContact: 'phone' });
+        window.open(waUrl, '_blank', 'noopener,noreferrer');
       } else if (data.details && data.details.length > 0) {
         setStatus(`Error: ${data.details[0].message}`);
       } else {
@@ -130,14 +169,9 @@ export default function ContactPage() {
               <div className="form-group" style={{ marginBottom: 0 }}>
                 <label className="form-label">Service Required *</label>
                 <select name="serviceSelection" value={formData.serviceSelection} onChange={handleChange} className="form-control">
-                  <option value="renovation-grouting">Renovation & Grouting</option>
-                  <option value="pipe-leak-repair">Pipe Leak Repair</option>
-                  <option value="bathroom-plumbing">Bathroom Plumbing</option>
-                  <option value="drain-cleaning">Drain Cleaning</option>
-                  <option value="kitchen-plumbing">Kitchen Plumbing</option>
-                  <option value="geyser-installation">Geyser Installation</option>
-                  <option value="water-tank-installation">Water Tank Installation</option>
-                  <option value="other">Other</option>
+                  {SERVICE_OPTIONS.map((opt) => (
+                    <option key={opt.value} value={opt.value}>{opt.label}</option>
+                  ))}
                 </select>
               </div>
               <div className="form-group" style={{ marginBottom: 0 }}>
@@ -170,6 +204,25 @@ export default function ContactPage() {
                 }}>
                   {status}
                 </div>
+              )}
+              {whatsappUrl && (
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn"
+                  style={{
+                    width: '100%',
+                    padding: '0.9rem 1rem',
+                    backgroundColor: '#25D366',
+                    color: 'white',
+                    border: 'none',
+                    justifyContent: 'center',
+                    fontWeight: 600,
+                  }}
+                >
+                  <MessageCircle size={18} /> Send Enquiry on WhatsApp
+                </a>
               )}
               <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', textAlign: 'center' }}>
                 By submitting, you consent to being contacted about your enquiry.
