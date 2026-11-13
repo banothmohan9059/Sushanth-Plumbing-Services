@@ -130,8 +130,8 @@ export default function MainLayout() {
             <Link to="/" style={{ textDecoration: 'none', display: 'inline-block', marginBottom: '1.5rem' }}>
               <Logo variant="dark" />
             </Link>
-            <p style={{ color: 'rgba(255,255,255,0.5)', marginBottom: '1.5rem', fontSize: '0.95rem', lineHeight: 1.7 }}>
-              Hyderabad's trusted specialists in renovation, grouting, and premium plumbing services. Quality workmanship and transparent pricing.
+            <p style={{ color: 'rgba(255,255,255,0.6)', marginBottom: '1.5rem', fontSize: '0.95rem', lineHeight: 1.7 }}>
+              Hyderabad's trusted specialists in plumbing, bathroom renovations, and precision tile grouting. Reliable service and lasting solutions with 100% transparent pricing.
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               <a

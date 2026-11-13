@@ -503,6 +503,12 @@ img {
   }
 }
 
+@media (max-width: 640px) {
+  .premium-logo img {
+    height: 40px !important;
+  }
+}
+
 /* ═══════════════════════════════════
    FLOATING ACTION BUTTON
    ═══════════════════════════════════ */

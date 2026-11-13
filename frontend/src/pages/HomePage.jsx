@@ -34,23 +34,23 @@ export default function HomePage() {
             {/* Eyebrow badge */}
             <div className="hero-v2__badge">
               <span className="hero-v2__badge-dot" />
-              <span>Renovation · Plumbing · Grouting</span>
+              <span>Hyderabad's Trusted Experts · Plumbing · Renovation · Grouting</span>
             </div>
 
-            {/* Business Name — Prominent */}
+            {/* Business Name — Prominent Brand Title */}
             <h1 className="hero-v2__title">
               <span className="hero-v2__title-line1">Sushanth</span>
               <span className="hero-v2__title-line2">Plumbing Services</span>
             </h1>
 
-            {/* Tagline */}
+            {/* Brand Motto / Headline */}
             <p className="hero-v2__tagline">
-              Exceptional Plumbing. <em>Thoughtfully Delivered.</em>
+              Reliable Service. <em>Lasting Solutions.</em>
             </p>
 
             {/* Description */}
             <p className="hero-v2__desc">
-              Premium bathroom renovations, precision tile grouting, and expert plumbing solutions — crafted with over a decade of trusted expertise across Hyderabad.
+              Hyderabad’s premier specialists for prompt plumbing repairs, luxury bathroom renovations, and precision tile grouting — delivered with guaranteed workmanship, prompt response, and transparent pricing.
             </p>
 
             {/* CTAs */}

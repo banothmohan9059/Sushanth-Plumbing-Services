@@ -3,5 +3,6 @@ Allow: /
 Disallow: /admin
 Disallow: /admin/
 
+Sitemap: https://sushanthplumbingservices.in/sitemap.xml
 Sitemap: https://www.sushanthplumbingservices.in/sitemap.xml
 
