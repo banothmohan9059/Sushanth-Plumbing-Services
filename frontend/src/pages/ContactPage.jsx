@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Phone, MessageCircle, MapPin, Send } from 'lucide-react';
+import { trackPhoneConversion } from '../utils/googleAds';
 
 const ADMIN_WHATSAPP_NUMBER = '917995486994';
 
@@ -131,7 +132,15 @@ export default function ContactPage() {
                   <div>
                     <h3 style={{ fontSize: '1.1rem', marginBottom: '0.15rem' }}>{item.title}</h3>
                     {item.href ? (
-                      <a href={item.href} target={item.href.startsWith('http') ? '_blank' : undefined} rel="noreferrer" style={{ fontSize: '1rem', fontWeight: 500 }}>{item.value}</a>
+                      <a
+                        href={item.href}
+                        target={item.href.startsWith('http') ? '_blank' : undefined}
+                        rel="noreferrer"
+                        onClick={item.href.startsWith('tel:') ? trackPhoneConversion : undefined}
+                        style={{ fontSize: '1rem', fontWeight: 500 }}
+                      >
+                        {item.value}
+                      </a>
                     ) : (
                       <span style={{ fontSize: '1rem', fontWeight: 500 }}>{item.value}</span>
                     )}

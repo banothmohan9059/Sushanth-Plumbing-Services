@@ -1,5 +1,6 @@
 import { MapPin, PhoneCall, CheckCircle2, Navigation, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { trackPhoneConversion } from '../utils/googleAds';
 
 export default function AreasWeServePage() {
   const serviceZones = [
@@ -124,7 +125,12 @@ export default function AreasWeServePage() {
               </p>
               
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <a href="tel:+917995486994" className="btn btn-primary" style={{ justifyContent: 'center', padding: '1.1rem', fontSize: '1rem' }}>
+                <a
+                  href="tel:+917995486994"
+                  onClick={trackPhoneConversion}
+                  className="btn btn-primary"
+                  style={{ justifyContent: 'center', padding: '1.1rem', fontSize: '1rem' }}
+                >
                   <PhoneCall size={18} /> Call +91 79954 86994
                 </a>
                 <Link to="/contact" className="btn" style={{ 

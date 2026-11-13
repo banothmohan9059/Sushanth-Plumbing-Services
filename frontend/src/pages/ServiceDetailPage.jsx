@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, CheckCircle, PhoneCall, MessageCircle } from 'lucide-react';
 import { siteImages } from '../data/siteImages';
+import { trackPhoneConversion } from '../utils/googleAds';
 
 const serviceDetails = {
   'pipe-leak-repair': { name: 'Pipe Leak Repair', desc: 'Expert repair for all types of pipe leaks. We quickly identify the source and provide a permanent fix to prevent water damage.', features: ['Leak detection', 'PVC and copper pipe repair', 'Underground pipe repair', 'Emergency response'], image: siteImages.pipeRepair },
@@ -66,7 +67,14 @@ export default function ServiceDetailPage() {
                 Contact us for a quick inspection and transparent quotation.
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <a href="tel:+917995486994" className="btn btn-primary" style={{ justifyContent: 'center' }}><PhoneCall size={18} /> Call Now</a>
+                <a
+                  href="tel:+917995486994"
+                  onClick={trackPhoneConversion}
+                  className="btn btn-primary"
+                  style={{ justifyContent: 'center' }}
+                >
+                  <PhoneCall size={18} /> Call Now
+                </a>
                 <a href="https://wa.me/917995486994" target="_blank" rel="noreferrer" className="btn" style={{ justifyContent: 'center', background: '#25D366', color: 'white', border: 'none' }}><MessageCircle size={18} /> WhatsApp</a>
                 <Link to="/contact" className="btn btn-outline" style={{ justifyContent: 'center' }}>Send Enquiry</Link>
               </div>

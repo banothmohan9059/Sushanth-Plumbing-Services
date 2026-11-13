@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Wrench, Droplet, Hammer, CheckCircle2, PhoneCall, ArrowRight } from 'lucide-react';
 import { siteImages } from '../data/siteImages';
+import { trackPhoneConversion } from '../utils/googleAds';
 
 export default function HomePage() {
   return (
@@ -54,7 +55,11 @@ export default function HomePage() {
 
             {/* CTAs */}
             <div className="hero-v2__actions">
-              <a href="tel:+917995486994" className="hero-v2__cta-primary">
+              <a
+                href="tel:+917995486994"
+                onClick={trackPhoneConversion}
+                className="hero-v2__cta-primary"
+              >
                 <PhoneCall size={18} />
                 Call for Service
               </a>

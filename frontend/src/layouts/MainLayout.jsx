@@ -2,6 +2,7 @@ import { Outlet, Link, useLocation } from 'react-router-dom';
 import { Phone, MessageCircle, MapPin, Mail, Clock, ShieldCheck, Menu, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import Logo from '../components/Logo';
+import { trackPhoneConversion } from '../utils/googleAds';
 import '../styles/index.css';
 
 export default function MainLayout() {
@@ -71,7 +72,12 @@ export default function MainLayout() {
 
           {/* Desktop Actions */}
           <div className="desktop-header-actions">
-            <a href="tel:+917995486994" className="btn btn-primary" style={{ padding: '0.6rem 1.25rem', fontSize: '0.9rem' }}>
+            <a
+              href="tel:+917995486994"
+              onClick={trackPhoneConversion}
+              className="btn btn-primary"
+              style={{ padding: '0.6rem 1.25rem', fontSize: '0.9rem' }}
+            >
               <Phone size={16} /> Call Us
             </a>
           </div>
@@ -95,7 +101,12 @@ export default function MainLayout() {
           </Link>
         ))}
         <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
-          <a href="tel:+917995486994" className="btn btn-primary" style={{ padding: '1rem 2rem' }}>
+          <a
+            href="tel:+917995486994"
+            onClick={trackPhoneConversion}
+            className="btn btn-primary"
+            style={{ padding: '1rem 2rem' }}
+          >
             <Phone size={18} /> Call Now
           </a>
           <a href="https://wa.me/917995486994" target="_blank" rel="noreferrer" className="btn" style={{
@@ -123,7 +134,11 @@ export default function MainLayout() {
               Hyderabad's trusted specialists in renovation, grouting, and premium plumbing services. Quality workmanship and transparent pricing.
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              <a href="tel:+917995486994" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 500, color: 'rgba(255,255,255,0.7)' }}>
+              <a
+                href="tel:+917995486994"
+                onClick={trackPhoneConversion}
+                style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 500, color: 'rgba(255,255,255,0.7)' }}
+              >
                 <Phone size={16} color="var(--color-secondary)" /> +91 79954 86994
               </a>
               <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 500 }}>
