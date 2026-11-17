@@ -105,7 +105,13 @@
       gtag('config', 'AW-18462869367');
     </script>
     <script>
+    var _gtag_last_conversion_time = 0;
     function gtag_report_conversion(url) {
+      var now = new Date().getTime();
+      if (now - _gtag_last_conversion_time < 1500) {
+        return false;
+      }
+      _gtag_last_conversion_time = now;
       var callback = function () {
         if (typeof(url) != 'undefined') {
           window.location = url;

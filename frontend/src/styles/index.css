@@ -594,6 +594,14 @@ img {
     transform: scale(0.98);
     opacity: 0.95;
   }
+
+  .mobile-sticky-call-btn svg {
+    pointer-events: none;
+  }
+}
+
+a[href^="tel:"] > * {
+  pointer-events: none;
 }
 
 /* ═══════════════════════════════════
