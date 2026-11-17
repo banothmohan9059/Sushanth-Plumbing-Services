@@ -536,10 +536,63 @@ img {
 
 @media (max-width: 768px) {
   .fab {
-    bottom: 1.25rem;
+    bottom: 5.25rem;
     right: 1.25rem;
     width: 3.5rem;
     height: 3.5rem;
+  }
+  body {
+    padding-bottom: 5rem;
+  }
+}
+
+/* ═══════════════════════════════════
+   MOBILE STICKY CALL NOW BUTTON
+   ═══════════════════════════════════ */
+.mobile-sticky-call-bar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-sticky-call-bar {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 990;
+    padding: 0.65rem 1rem env(safe-area-inset-bottom, 0.65rem);
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.12);
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .mobile-sticky-call-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    width: 100%;
+    min-height: 50px;
+    padding: 0.85rem 1.5rem;
+    background: linear-gradient(135deg, var(--color-primary) 0%, #173d61 100%);
+    color: #ffffff !important;
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-align: center;
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 14px rgba(15, 46, 74, 0.3);
+    transition: transform var(--transition-fast), opacity var(--transition-fast);
+  }
+
+  .mobile-sticky-call-btn:active {
+    transform: scale(0.98);
+    opacity: 0.95;
   }
 }
 

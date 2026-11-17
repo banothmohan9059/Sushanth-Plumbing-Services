@@ -181,7 +181,7 @@ export default function MainLayout() {
         </div>
       </footer>
 
-      {/* ═══ WhatsApp FAB ═══ */}
+      {/* ═══ WhatsApp FAB (Unmodified) ═══ */}
       <a
         href="https://wa.me/917995486994"
         target="_blank"
@@ -191,6 +191,17 @@ export default function MainLayout() {
       >
         <MessageCircle size={26} />
       </a>
+
+      {/* ═══ Mobile Sticky Call Now Button (Mobile Only) ═══ */}
+      <div className="mobile-sticky-call-bar">
+        <a
+          href="tel:+917995486994"
+          onClick={trackPhoneConversion}
+          className="mobile-sticky-call-btn"
+        >
+          <Phone size={20} /> Call Now
+        </a>
+      </div>
     </div>
   );
 }
